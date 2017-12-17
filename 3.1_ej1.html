@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="author" content="javier soriano">
+        <title>jQuery - rendimiento</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <h2>Abra la consola del navegador para ver la ejecución del código.</h2>
+        <p class="clasebar" id="p1">Párrafo 1 perteneciente a la clase: <em>clasebar.</em></p>
+        <p class="clasebar" id="p2">Párrafo 2 perteneciente a la clase: clasebar.</p>
+        <p class="clasebar" id="p3">Párrafo 3 perteneciente a la clase: clasebar.</p>
+        <p class="clasebar" id="p4">Párrafo 4 perteneciente a la clase: clasebar.</p>
+        <p class="clasebar" id="p5">Párrafo 5 perteneciente a la clase: clasebar.</p>
+        <label>Número de repeticiones: <input type="number" min="10" id="repeticiones" value="100"></label>
+        <input type="button" id="btn1" value="Lanzar">
+        <p>Tiempo con jQuery <span id="res1"></span><span></p>
+        <p>Tiempo con VanillaJS <span id="res2"></span><span></p>
+        <script>
+            function darTiempo(inicio,final,p){
+                var tiempo = (toMilisegundos(final))- (toMilisegundos(inicio));
+                var par = document.getElementById(p);
+                par.innerHTML = "Ha tardado " + tiempo + " milisegundos";
+            }
+            function toMilisegundos(a){
+                var i_ms = a.getMilliseconds()*1;
+                i_ms += a.getSeconds() * 1000;
+                i_ms += a.getMinutes() * 60 * 1000;
+                i_ms += a.getHours() * 60 * 60 * 1000;
+                console.log(i_ms);
+                return i_ms;
+            }
+            //script de jQuery
+            $(document).ready(function(){
+                $('#btn1').click(recorrerTodo);
+            });
+            function recorrerTodo(){
+                recorrer();
+                avanzar();
+            }
+            function recorrer(){
+                var t=document.getElementById("repeticiones").value || 1;
+                console.log(t);
+                var inicio = new Date();                
+                for (var i=1;i<=t;i++){
+                    recorrer2();
+                }
+                var final = new Date();
+                console.log("Con jQuery: ");
+                darTiempo(inicio,final,"res1");
+            }
+            function recorrer2(){
+                var $bar=$('.clasebar'); 
+                var $foo=$('#p1');
+                $bar.each(function(index,value){
+                    console.log($(this).html());
+                });
+                console.log($foo.html());
+            }
+            //script de vanillaJS
+            function avanzar(){
+                var t=document.getElementById("repeticiones").value || 1;                
+                var inicio = new Date();                
+                for (var i=1;i<=t;i++){
+                    avanzar2();
+                }
+                var final = new Date();
+                darTiempo(inicio,final,"res2");
+            }
+            function avanzar2(){
+                var bar=document.getElementsByClassName("clasebar");
+                var foo=document.getElementById("p1");
+                for (var i=1;i<bar.length;i++){
+                    console.log(bar[i].innerHTML);
+                }
+                console.log(foo.innerHTML);
+            }
+        </script>
+    </body>
+</html>
