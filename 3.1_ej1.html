@@ -31,51 +31,33 @@
                 console.log(i_ms);
                 return i_ms;
             }
-            //script de jQuery
             $(document).ready(function(){
-                $('#btn1').click(recorrerTodo);
+                $('#btn1').click(avanzar);
             });
-            function recorrerTodo(){
-                recorrer();
-                avanzar();
-            }
-            function recorrer(){
-                var t=document.getElementById("repeticiones").value || 1;
-                console.log(t);
-                var inicio = new Date();                
-                for (var i=1;i<=t;i++){
-                    recorrer2();
-                }
-                var final = new Date();
-                console.log("Con jQuery: ");
-                darTiempo(inicio,final,"res1");
-            }
-            function recorrer2(){
-                var $bar=$('.clasebar'); 
-                var $foo=$('#p1');
-                $bar.each(function(index,value){
-                    console.log($(this).html());
-                });
-                console.log($foo.html());
-            }
-            //script de vanillaJS
             function avanzar(){
                 var t=document.getElementById("repeticiones").value || 1;                
-                var inicio = new Date();                
+                var inicio1 = new Date();                
                 for (var i=1;i<=t;i++){
-                    avanzar2();
+                    avanzarJQ();
                 }
-                var final = new Date();
-                darTiempo(inicio,final,"res2");
+                var final1 = new Date();
+                darTiempo(inicio1,final1,"res1");
+                var inicio2 = new Date();                
+                for (var j=1;j<=t;j++){
+                    avanzarVJS();
+                }
+                var final2 = new Date();
+                darTiempo(inicio2,final2,"res2");
             }
-            function avanzar2(){
-                var bar=document.getElementsByClassName("clasebar");
+            function avanzarJQ(){
+                var $foo=$('#p1');
+                //console.log($foo.html());
+            }
+            function avanzarVJS(){
                 var foo=document.getElementById("p1");
-                for (var i=1;i<bar.length;i++){
-                    console.log(bar[i].innerHTML);
-                }
-                console.log(foo.innerHTML);
+                //console.log(foo.innerHTML);
             }
         </script>
     </body>
 </html>
+
